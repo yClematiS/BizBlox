@@ -1,0 +1,285 @@
+print([[
+--------------------------------------------------------------------------------------
+ ________  ___       _______   _____ ______   ________  _________  ___  ________      
+|\   ____\|\  \     |\  ___ \ |\   _ \  _   \|\   __  \|\___   ___\\  \|\   ____\     
+\ \  \___|\ \  \    \ \   __/|\ \  \\\__\ \  \ \  \|\  \|___ \  \_\ \  \ \  \___|_    
+ \ \  \    \ \  \    \ \  \_|/_\ \  \\|__| \  \ \   __  \   \ \  \ \ \  \ \_____  \   
+  \ \  \____\ \  \____\ \  \_|\ \ \  \    \ \  \ \  \ \  \   \ \  \ \ \  \|____|\  \  
+   \ \_______\ \_______\ \_______\ \__\    \ \__\ \__\ \__\   \ \__\ \ \__\_________\
+    \|_______|\|_______|\|_______|\|__|     \|__|\|__|\|__|    \|__|  \|__|\_________|
+
+                        ___  ___  ___  ___  ________     
+                        |\  \|\  \|\  \|\  \|\   __  \    
+                        \ \  \\\  \ \  \\\  \ \  \|\ /_   
+                         \ \   __  \ \  \\\  \ \   __  \  
+                          \ \  \ \  \ \  \\\  \ \  \|\  \ 
+                           \ \__\ \__\ \_______\ \_______\
+                            \|__|\|__|\|_______|\|_______|
+----------------------------------------------------------------------------------------------- --
+]])
+
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local rootPart = character:FindFirstChild("HumanoidRootPart")
+
+while not rootPart do
+    rootPart = character:FindFirstChild("HumanoidRootPart")
+    wait()
+end
+
+game:GetService("Players").LocalPlayer.Idled:connect(function()
+    game:GetService("VirtualUser"):CaptureController()
+    game:GetService("VirtualUser"):ClickButton2(Vector2.new())
+end)
+
+function getmaincode()
+    local characters = "QWERTYUIOPASDFGHJKLZXCVBNM"
+    local result = ""
+    for i = 1, 1 do
+        local randomIndex = math.random(2, #characters)
+        result = result .. string.sub(characters, randomIndex, randomIndex)
+    end
+    return result
+end
+
+function getcode()
+    local characters = "1234567890"
+    local result = ""
+    for i = 1, 5 do
+        local randomIndex = math.random(2, #characters)
+        result = result .. string.sub(characters, randomIndex, randomIndex)
+    end
+    return result
+end
+
+local function startTypingAnimation3()
+    local randomText1 = getmaincode()
+    local randomText2 = getcode()
+    local username = game.Players.LocalPlayer.Character.Name
+    random_name = " | Clematis Hub | " .. username .. " | Session : ( "..randomText1.."-"..randomText2.." ) "
+end
+spawn(startTypingAnimation3)
+
+local usernames = game.Players.LocalPlayer.Character.Name
+local pid = tostring(game.PlaceId)
+
+print("Loading Lib")
+_G.theme = "Amethyst"
+wait(0.2)
+local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+print("Ui Lib Loaded")
+wait(1)
+print("Loading Function")
+local MainWindow = Rayfield:CreateWindow({
+    Name = random_name or "Clematis Hub | Err Loading | Session : ( Error! )",
+    Icon = 0,
+    LoadingTitle = "Loading!",
+    LoadingSubtitle = "Script By Seaweed_hunter",
+    Theme = _G.theme,
+    DisableRayfieldPrompts = false,
+    DisableBuildWarnings = false,
+    ConfigurationSaving = {
+        Enabled = true,
+        FolderName = "ClematisHub",
+        FileName = usernames .. "_SavedConfig_" .. pid
+    },
+    Discord = {
+        Enabled = false,
+        Invite = "noinvitelink",
+        RememberJoins = true
+    },
+    KeySystem = false,
+    KeySettings = {
+        Title = "Key?",
+        Subtitle = "Key on Discord Server",
+        Note = "Get Key From Discord",
+        FileName = "Key",
+        SaveKey = true,
+        GrabKeyFromSite = false,
+        Key = {"NOOOO"}
+    }
+})
+
+local MainTab = MainWindow:CreateTab("Auto Farm")
+local AutoFarm = MainTab:CreateSection("Inventory")
+findarr = false
+local mouse1 = MainTab:CreateToggle({
+    Name = "Find Arrow",
+    CurrentValue = false,
+    Flag = "xxx",
+    Callback = function(Value)
+        findarr = Value
+        if findarr then
+            while findarr do
+                wait(2)
+                local me = game.Players.LocalPlayer.Character
+                if not me or not me:FindFirstChild("HumanoidRootPart") then return end
+        
+                for _, v in pairs(game.Workspace:GetDescendants()) do
+                    if v:IsA("Tool") and v.Parent == game.Workspace and v:FindFirstChild("ArrowPart") then
+                        local success, arrowCFrame = pcall(function()
+                            return v.ArrowPart.CFrame
+                        end)
+        
+                        if success then
+                            me.HumanoidRootPart.CFrame = arrowCFrame
+                            break
+                        end
+                    end
+                end
+            end
+        end
+    end
+})
+
+punch = false
+local AutoFishToggle = MainTab:CreateToggle({
+    Name = "Auto M1",
+    CurrentValue = false,
+    Flag = "M1",
+    Callback = function(Value)
+        punch = Value
+        if punch then
+            task.spawn(function()
+                while punch do
+                    wait()
+
+                    local me = game.Players.LocalPlayer.Character
+                    if not me or not me:FindFirstChild("HumanoidRootPart") then
+                        wait(1)
+                    else
+                        local ply = me.HumanoidRootPart
+                        local args = {
+                            [1] = "M1",
+                            [2] = true,
+                            [3] = ply.CFrame * CFrame.new(0, 0, -20)
+                        }
+
+                        game:GetService("ReplicatedStorage"):WaitForChild("Remote"):WaitForChild("HumonEvent"):FireServer(unpack(args))
+                    end
+                end
+            end)
+        end
+    end
+})
+
+hitboxsize = false
+local hitboxThread = nil
+
+local hi9t999 = MainTab:CreateToggle({
+    Name = "Farm Locked Mobs",
+    CurrentValue = false,
+    Flag = "AllMob",
+    Callback = function(Value)
+        hitboxsize = Value
+        if hitboxsize and not hitboxThread then
+            hitboxThread = task.spawn(function()
+                while hitboxsize do
+                    wait()
+
+                    local mobFolder = workspace:FindFirstChild("Enemies")
+                    local me = game.Players.LocalPlayer.Character
+
+                    if mobFolder and me and me:FindFirstChild("HumanoidRootPart") then
+                        local plyRoot = me.HumanoidRootPart
+                        local closestMob = nil
+                        local closestDistance = math.huge
+
+                        for _, mob in pairs(mobFolder:GetChildren()) do
+                            local humanoid = mob:FindFirstChildOfClass("Humanoid")
+                            local rootPart = mob:FindFirstChild("HumanoidRootPart")
+
+                            if humanoid and rootPart and humanoid.Health > 0 then
+                                rootPart.Anchored = true
+                                local distance = (plyRoot.Position - rootPart.Position).Magnitude
+                                if distance < closestDistance then
+                                    closestDistance = distance
+                                    closestMob = mob
+                                end
+                            end
+                        end
+
+                        if closestMob then
+                            local humanoid = closestMob:FindFirstChildOfClass("Humanoid")
+                            local rootPart = closestMob:FindFirstChild("HumanoidRootPart")
+
+                            if humanoid and rootPart and humanoid.Health > 0 then
+                                if humanoid.Health < humanoid.MaxHealth * 0.80 then
+                                    rootPart.Anchored = false
+                                    wait(0.2)
+                                    humanoid.Health = 0
+                                end
+                                me.HumanoidRootPart.CFrame = rootPart.CFrame * CFrame.new(0, 0, 5)
+                            end
+                        end
+                    end
+                end
+                hitboxThread = nil
+            end)
+        elseif not hitboxsize and hitboxThread then
+            hitboxThread = nil
+        end
+    end
+})
+
+
+Skills = {
+    "Z", "X", "C", "V", "E", "B", "N", "R", "T", "F", "G", "Y", "U"
+}
+
+SkillList = {}
+local SkillThreads = {}
+
+local Dropdown = MainTab:CreateDropdown({
+    Name = "Skill Selection",
+    Options = Skills,
+    CurrentOption = {},
+    MultipleOptions = true,
+    Callback = function(option)
+        SkillList = option or {}
+        local skillString = table.concat(SkillList, ", ")
+        Rayfield:Notify({
+            Title = "Skills Selected",
+            Content = "You have selected: " .. skillString,
+            Duration = 6.5,
+            Image = "location-pin",
+        })
+    end
+})
+
+Autoskill = false
+local Sk1 = MainTab:CreateToggle({
+    Name = "Auto Skill",
+    CurrentValue = false,
+    Flag = "Sk1",
+    Callback = function(Value)
+        Autoskill = Value
+        if Autoskill then
+            for _, skill in ipairs(SkillList) do
+                if not SkillThreads[skill] then
+                    SkillThreads[skill] = task.spawn(function()
+                        while Autoskill do
+                            wait()
+                            local me = game.Players.LocalPlayer.Character
+                            if not me or not me:FindFirstChild("HumanoidRootPart") then break end
+                            
+                            local ply = me.HumanoidRootPart
+                            local args = {
+                                [1] = true,
+                                [2] = skill,
+                                [3] = ply.CFrame * CFrame.new(0, 0, -5)
+                            }
+                            
+                            game:GetService("ReplicatedStorage"):WaitForChild("Remote"):WaitForChild("RemoteFunction"):InvokeServer(unpack(args))
+                        end
+                        SkillThreads[skill] = nil
+                    end)
+                end
+            end
+        else
+            for skill, thread in pairs(SkillThreads) do
+                SkillThreads[skill] = nil
+            end
+        end
+    end
+})
