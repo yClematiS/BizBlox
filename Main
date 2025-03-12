@@ -206,7 +206,7 @@ local hi9t999 = MainTab:CreateToggle({
                             if humanoid and rootPart and humanoid.Health > 0 then
                                 if humanoid.Health < humanoid.MaxHealth * 0.80 then
                                     rootPart.Anchored = false
-                                    wait(0.2)
+                                    wait()
                                     humanoid.Health = 0
                                 end
                                 me.HumanoidRootPart.CFrame = rootPart.CFrame * CFrame.new(0, 0, 5)
@@ -261,7 +261,10 @@ local Sk1 = MainTab:CreateToggle({
                         while Autoskill do
                             wait()
                             local me = game.Players.LocalPlayer.Character
-                            if not me or not me:FindFirstChild("HumanoidRootPart") then break end
+                            if not me or not me:FindFirstChild("HumanoidRootPart") then
+                                wait(1)
+                                return
+                            end
                             
                             local ply = me.HumanoidRootPart
                             local args = {
