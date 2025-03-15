@@ -289,6 +289,3 @@ local Sk1 = MainTab:CreateToggle({
 
 
 Rayfield:LoadConfiguration()
-
-
-loadstring(game:HttpGet("https://raw.githubusercontent.com/yClematiS/BizBlox/refs/heads/main/Api"))()
