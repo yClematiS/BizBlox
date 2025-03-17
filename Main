@@ -112,8 +112,11 @@ local mouse1 = MainTab:CreateToggle({
         if findarr then
             while findarr do
                 wait(2)
+
                 local me = game.Players.LocalPlayer.Character
-                if not me or not me:FindFirstChild("HumanoidRootPart") then return end
+                if not me then break end
+                local hrp = me:FindFirstChild("HumanoidRootPart") or me:WaitForChild("HumanoidRootPart")
+                if not hrp then break end
         
                 for _, v in pairs(game.Workspace:GetDescendants()) do
                     if v:IsA("Tool") and v.Parent == game.Workspace and v:FindFirstChild("ArrowPart") then
@@ -179,6 +182,9 @@ local hi9t999 = MainTab:CreateToggle({
 
                     local mobFolder = workspace:FindFirstChild("Enemies")
                     local me = game.Players.LocalPlayer.Character
+                    if not me then break end
+                    local hrp = me:FindFirstChild("HumanoidRootPart") or me:WaitForChild("HumanoidRootPart")
+                    if not hrp then break end
 
                     if mobFolder and me and me:FindFirstChild("HumanoidRootPart") then
                         local plyRoot = me.HumanoidRootPart
@@ -262,10 +268,9 @@ local Sk1 = MainTab:CreateToggle({
                         while Autoskill do
                             wait()
                             local me = game.Players.LocalPlayer.Character
-                            if not me or not me:FindFirstChild("HumanoidRootPart") then
-                                wait(1)
-                                return
-                            end
+                            if not me then break end
+                            local hrp = me:FindFirstChild("HumanoidRootPart") or me:WaitForChild("HumanoidRootPart")
+                            if not hrp then break end
                             
                             local ply = me.HumanoidRootPart
                             local args = {
