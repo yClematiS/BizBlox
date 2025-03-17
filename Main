@@ -373,6 +373,28 @@ local standsnpie = SecTap:CreateToggle({
     end
 })
 
+gotospawn = false
+local gotospawn = SecTap:CreateToggle({
+    Name = "Repeat to spawn",
+    CurrentValue = false,
+    Flag = "Gospawn",
+    Callback = function(Value)
+        gotospawn = Value
+        if gotospawn then
+            task.spawn(function()
+                while gotospawn do
+                    task.wait(1)
 
+                    local me = game.Players.LocalPlayer.Character
+                    if not me then break end
+                    local hrp = me:FindFirstChild("HumanoidRootPart") or me:WaitForChild("HumanoidRootPart")
+                    if not hrp then break end
+                    
+                    me.HumanoidRootPart.CFrame = CFrame.new(160, 18, 9)
+                end
+            end)
+        end
+    end
+})
 
 Rayfield:LoadConfiguration()
