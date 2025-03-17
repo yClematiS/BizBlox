@@ -222,6 +222,7 @@ local hi9t999 = MainTab:CreateToggle({
     end
 })
 
+local AutoSkill = MainTab:CreateSection("Auto Skill")
 
 Skills = {
     "Z", "X", "C", "V", "E", "B", "N", "R", "T", "F", "G", "Y", "U"
@@ -286,6 +287,92 @@ local Sk1 = MainTab:CreateToggle({
         end
     end
 })
+
+local SecTap = MainWindow:CreateTab("Item Snipe")
+local SecTapped = SecTap:CreateSection("Arrow Snipe")
+
+Stands = {
+    "ACT3",
+    "C-Moon",
+    "ChiliPepper",
+    "Cinderella",
+    "Crazy Diamond",
+    "D4C",
+    "Gold Experience",
+    "Gold Experience Requiem",
+    "Hermit Purple",
+    "Killer Queen",
+    "Killer Queen Requiem",
+    "King Crimson",
+    "Magician Red",
+    "Magician Red Requiem",
+    "Purple Haze",
+    "Silver Chariot",
+    "Six Pistols",
+    "Star Platinum",
+    "Star Platinum Requiem",
+    "Sticky Finger",
+    "Survivor",
+    "The Hand",
+    "The Sun",
+    "The World",
+    "The World Requiem",
+    "White Snake",
+    "Wonder Of U",
+    "Rebirth Arrow"
+}
+
+DefaultSnipe = {}
+
+local Dropdown = SecTap:CreateDropdown({
+    Name = "Stand Selection",
+    Options = Stands,
+    CurrentOption = {},
+    MultipleOptions = true,
+    Callback = function(option)
+        if type(option) == "table" then
+            DefaultSnipe = option
+        else
+            DefaultSnipe = {option}
+        end
+    end    
+})
+
+standsnipe = false
+local standsnpie = SecTap:CreateToggle({
+    Name = "Find Select Arrow",
+    CurrentValue = false,
+    Flag = "Sarrow",
+    Callback = function(Value)
+        standsnipe = Value
+        if standsnipe then
+            task.spawn(function()
+                while standsnipe do
+                    task.wait(1)
+
+                    local me = game.Players.LocalPlayer.Character
+                    if not me then break end
+                    local hrp = me:FindFirstChild("HumanoidRootPart") or me:WaitForChild("HumanoidRootPart")
+                    if not hrp then break end
+
+                    for _, v in ipairs(game.Workspace:GetDescendants()) do
+                        if table.find(DefaultSnipe, v.Name) and v.Parent == game.Workspace and v:FindFirstChild("ArrowPart") then
+                            local success, arrowCFrame = pcall(function()
+                                return v.ArrowPart.CFrame
+                            end)
+
+                            if success then
+                                hrp.CFrame = arrowCFrame
+                                task.wait(2)
+                            end
+                        end
+                    end
+                end
+            end)
+        end
+    end
+})
+
 
 
 Rayfield:LoadConfiguration()
