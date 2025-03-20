@@ -406,28 +406,25 @@ local ThirdTap = MainWindow:CreateTab("Misc")
 local ThirdTapped = ThirdTap:CreateSection("Misc")
 
 local Dropitem = ThirdTap:CreateButton({
-    Name = "Backspace",
+    Name = "Drop Item (Backspace)",
     Callback = function()
+        print("Button pressed, dropping item and simulating Backspace...")
         local UserInputService = game:GetService("UserInputService")
-        UserInputService.InputBegan:Connect(function(input, gameProcessedEvent)
-            if gameProcessedEvent then return end
+        local input = Instance.new("InputObject")
+        input.UserInputType = Enum.UserInputType.Keyboard
+        input.KeyCode = Enum.KeyCode.Backspace
+        UserInputService.InputBegan:Fire(input)
 
-            if input.UserInputType == Enum.UserInputType.Keyboard and input.KeyCode == Enum.KeyCode.Backspace then
-                print("Backspace pressed, dropping item...")
-
-                local player = game.Players.LocalPlayer
-                local character = player.Character
-                if character and character:FindFirstChild("Humanoid") then
-                    local tool = character:FindFirstChildOfClass("Tool")
-                    if tool then
-                        tool.Parent = workspace
-                        tool.CFrame = character.HumanoidRootPart.CFrame * CFrame.new(0, 0, -5)
-                    end
-                end
+        local player = game.Players.LocalPlayer
+        local character = player.Character
+        if character and character:FindFirstChild("Humanoid") then
+            local tool = character:FindFirstChildOfClass("Tool")
+            if tool then
+                tool.Parent = workspace
+                tool.CFrame = character.HumanoidRootPart.CFrame * CFrame.new(0, 0, -5)
             end
-        end)
+        end
     end,
 })
-
 
 Rayfield:LoadConfiguration()
