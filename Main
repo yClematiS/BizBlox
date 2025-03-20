@@ -402,4 +402,22 @@ local gotospawn = SecTap:CreateToggle({
     end
 })
 
+local ThirdTap = MainWindow:CreateTab("Misc")
+local ThirdTapped = ThirdTap:CreateSection("Misc")
+
+local Dropitem = Tab:CreateButton({
+    Name = "Backspace",
+    Callback = function()
+        
+        local UserInputService = game:GetService("UserInputService")
+        UserInputService.InputBegan:Connect(function(input, gameProcessedEvent)
+            if gameProcessedEvent then return end
+
+            if input.UserInputType == Enum.UserInputType.Keyboard and input.KeyCode == Enum.KeyCode.Backspace then
+                print("Backspace pressed, dropping item...")
+            end
+        end)
+    end,
+})
+
 Rayfield:LoadConfiguration()
