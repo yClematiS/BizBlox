@@ -415,7 +415,6 @@ local Dropitem = ThirdTap:CreateButton({
             local tool = character:FindFirstChildOfClass("Tool")
             if tool then
                 tool.Parent = workspace
-                tool.CFrame = character.HumanoidRootPart.CFrame * CFrame.new(0, 0, -5)
             end
         end
     end,
