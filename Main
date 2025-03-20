@@ -405,7 +405,7 @@ local gotospawn = SecTap:CreateToggle({
 local ThirdTap = MainWindow:CreateTab("Misc")
 local ThirdTapped = ThirdTap:CreateSection("Misc")
 
-local Dropitem = Tab:CreateButton({
+local Dropitem = ThirdTap:CreateButton({
     Name = "Backspace",
     Callback = function()
         
