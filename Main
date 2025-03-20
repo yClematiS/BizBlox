@@ -408,9 +408,16 @@ local ThirdTapped = ThirdTap:CreateSection("Misc")
 local Dropitem = ThirdTap:CreateButton({
     Name = "Drop Item",
     Callback = function()
-            local UserInputService = game:GetService("UserInputService")
-            local input = Enum.KeyCode.Backspace
-            UserInputService.InputBegan:Fire(input)
+
+        local player = game.Players.LocalPlayer
+        local character = player.Character
+        if character and character:FindFirstChild("Humanoid") then
+            local tool = character:FindFirstChildOfClass("Tool")
+            if tool then
+                tool.Parent = workspace
+                tool.CFrame = character.HumanoidRootPart.CFrame * CFrame.new(0, 0, -5)
+            end
+        end
     end,
 })
 
